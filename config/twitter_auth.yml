@@ -18,8 +18,8 @@ test:
   oauth_callback: "http://localhost:3000/oauth_callback"
 production:
   strategy: oauth
-  oauth_consumer_key: HFFMCqquj20jXD4wh1tuYw
-  oauth_consumer_secret: 9lrrRlkUHjn7asIoIaNb7Uh78GDc1eTsTNsM9NnI 
+  oauth_consumer_key: ENV['OAUTH_CONSUMER_KEY']
+  oauth_consumer_secret: ENV['OAUTH_CONSUMER_SECRET'] 
   authorize_path: "/oauth/authenticate"
   base_url: "https://twitter.com"
   api_timeout: 10
