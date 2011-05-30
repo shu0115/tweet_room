@@ -1,0 +1,10 @@
+<h1>Messages#index</h1>
+<p>Find me in app/views/messages/index.html.erb</p>
+
+<% if logged_in? %>
+  <% form_tag messages_path do %>
+    <%= submit_tag '偉大なるHelloWorldをツイートする' %>
+  <% end %>
+<% else %>
+  <%= link_to 'ログインする', login_path %>
+<% end %>
