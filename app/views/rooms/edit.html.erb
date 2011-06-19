@@ -17,6 +17,13 @@
   <br />
 
   <p>
+    <%= f.label :external_site, t("room.external_site") %><br />
+    <%= f.text_field :external_site, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+
+  <p>
     <%= f.label :mode, t("room.mode") %>：
     <% unless User.level_master?( session[:user_id] ) %>
       <%= @room.mode %>
