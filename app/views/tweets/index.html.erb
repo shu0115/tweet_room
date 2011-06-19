@@ -1,0 +1,171 @@
+<%# ルーム情報 %>
+<table>
+  <tr>
+    <td style="white-space: nowrap;">
+    <% unless @room.external_site.blank? %>
+      <%= link_to @room.title, @room.external_site, :target => "_blank" %>
+    <% else %>
+      <%= @room.title %>
+    <% end %>
+    <br />
+    <%= t("room.synchro") %>：<%= @room.synchro_flag %>　<%= t("room.keep") %>：<%= @room.keep_flag %><br />
+    <%= link_to "Twitter", "http://twitter.com/#!/search/#{CGI.escape(@room.hash_tag)}", :target => "_blank" %>　<%= link_to "Google", "http://www.google.co.jp/search?q=#{CGI.escape(@room.hash_tag)}&hl=ja&biw=1131&bih=754&prmd=ivns&source=lnms&tbs=mbl:1&ei=WxWTTcqGIJHqvQPT-Zi9CA&sa=X&oi=mode_link&ct=mode&cd=9&ved=0CB4Q_AUoCA&prmdo=1#q=#{CGI.escape(@room.hash_tag)}+site%3Atwitter.com&tbs=mbl:1&tbo=1&hl=ja&lr=lang_ja&prmdo=1&tbm=mbl&sa=X&ei=gM7lTYzGI4mOvQPOk5CECw&ved=0CCMQsQcwAA&bav=on.2,or.r_gc.r_pw.&fp=a7fd3f5679dbb192&biw=1123&bih=716", :target => "_blank" %>
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<%# メッセージ %>
+<% unless flash[:tweet_notice].blank? %>
+  <p style="color: green"><%= flash[:tweet_notice] %></p>
+  <br />
+<% end %>
+
+<%# メニュー %>
+<span class="menu">
+  <%#= link_to t("menu.list"), { :controller => "rooms" } %>
+  <%= link_to t("menu.list"), { :controller => params[:menu] } %>
+  <%= link_to t("menu.reload"), { :action => "index", :room_id => params[:room_id], :menu => params[:menu] } %>
+</span><br />
+
+<br />
+
+<%# Tweet投稿 %>
+<% form_for :tweet, :url => { :action => "post", :room_id => @room.id, :menu => params[:menu] } do |f| %>
+<table>
+  <tr>
+    <%# ポスト %>
+    <td style="white-space: nowrap;" colspan="4">
+      <%= f.text_field :post, :class => "input_field_width_500" %>
+      <%= @room.hash_tag unless @room.blank? %>
+      <span id="char_count"><%= 140 - 1 - @room.hash_tag.length %></span>
+      
+      <%= observe_field(
+        :tweet_post,
+        :frequency => 0.25,
+        :update => :char_count,
+        :url => { :action => :char_count, :hash_tag_length => @room.hash_tag.length },
+        :with => "value"
+        )
+      %>
+      
+      <%= f.submit t("tweet.post"), :disable_with => t("tweet.post") %>
+    </td>
+  </tr>
+
+  <%# ページング %>
+  <% if !@tweets.blank? and @tweets.total_pages > 1 %>
+  <tr class="top_line">
+    <td style="white-space: nowrap;" colspan="4">
+      <%= will_paginate @tweets, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %>
+      <br />
+    </td>
+  </tr>
+  <% end %>
+
+  <%# 保管Tweet %>
+  <% @tweets.each do |tweet| %>
+  <tr class="top_line">
+    <%# アイコン %>
+    <td style="width: 30px;">
+      <%= link_to image_tag( tweet.user.profile_image_url, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => "#{tweet.user.login}／#{tweet.user.name}" ), "http://twitter.com/#!/#{tweet.user.login}", :target => "_blank" unless tweet.user.blank? %>
+    </td>
+
+    <%# Tweet %>
+    <td><%=h tweet.post %></td>
+    
+    <%# ポスト時刻 %>
+    <td align="right" style="white-space: nowrap;" title="<%=h tweet.created_at.strftime("%Y/%m/%d %H:%M") unless tweet.created_at.blank? %>"><%=h tweet.created_at.strftime("%m/%d %H:%M") unless tweet.created_at.blank? %></td>
+    
+    <%# 削除ボタン %>
+    <td style="width: 30px;" class="menu"><%= link_to t("menu.delete"), { :action => "destroy", :id => tweet.id, :menu => params[:menu] }, :confirm => '本当に削除してよろしいですか？' if tweet.user_id == session[:user_id] %></td>
+  </tr>
+  <% end %>
+
+  <%# ページング %>
+  <% if !@tweets.blank? and @tweets.total_pages > 1 %>
+  <tr class="top_line">
+    <td style="white-space: nowrap;" colspan="4">
+      <%= will_paginate @tweets, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %>
+      <br />
+    </td>
+  </tr>
+  <% end %>
+  
+  <% unless @tweets.blank? %>
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <% end %>
+</table>
+<% end %>
+
+<br />
+
+<%# アンカーターゲット %>
+<span id="tweet_top"></span>
+
+<%# Tweetページング %>
+<%= render :partial => "tweet_paging" %>
+
+<br />
+
+<%# Tweet検索結果がブランクでなければ %>
+<% unless @twitter_get["results"].blank? %>
+
+<%# Tweet検索結果 %>
+<table>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+<% @twitter_get["results"].each do |result| %>
+  <tr class="top_line">
+    <%# プロフィール画像 %>
+    <td style="width: 15px;">
+      <%= link_to image_tag( result["profile_image_url"], :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => result["from_user"] ), "http://twitter.com/#!/#{result["from_user"]}", :target => "_blank" %>
+    </td>
+    
+    <%# ユーザ名 %>
+    <td>
+      <%= link_to result["from_user"], "http://twitter.com/#!/#{result["from_user"]}", :target => "_blank" %>
+    </td>
+    
+    <%# Tweet %>
+    <td><%=h result["text"] %></td>
+
+    <%# 投稿時刻 %>
+    <td style="white-space: nowrap;"><%=h Time.parse( result["created_at"] ).strftime("%Y/%m/%d %H:%M") unless result["created_at"].blank? %></td>
+  </tr>
+<% end %>
+
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<%# Tweetページング %>
+<%= render :partial => "tweet_paging" %>
+
+<br />
+
+<% end %>
+
+<br />
+
+<%# メニュー %>
+<span class="menu">
+  <%#= link_to t("menu.list"), { :controller => "rooms" } %>
+  <%= link_to t("menu.list"), { :controller => params[:menu] } %>
+  <%= link_to t("menu.reload"), { :action => "index", :room_id => params[:room_id], :menu => params[:menu] } %>
+</span>

@@ -12,3 +12,6 @@ tmp/**/*
 # Redcar
 .redcar
 .redcar/*
+
+# Local Setting File
+config/local_setting.rb

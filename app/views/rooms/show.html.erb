@@ -1,0 +1,41 @@
+
+<table>
+  <tr>
+    <th align="left"><%= t("room.title") %></th>
+    <td><%= @room.title %></td>
+  </tr>
+
+  <tr>
+    <th align="left"><%= t("room.hash_tag") %></th>
+    <td><%= @room.hash_tag %></td>
+  </tr>
+  
+  <tr>
+    <th align="left"><%= t("room.mode") %></th>
+    <td><%= @room.mode %></td>
+  </tr>
+  
+  <tr>
+    <th align="left"><%= t("room.synchro_flag") %></th>
+    <td><%= @room.synchro_flag %></td>
+  </tr>
+  
+  <tr>
+    <th align="left"><%= t("room.keep_flag") %></th>
+    <td><%= @room.keep_flag %></td>
+  </tr>
+  
+  <tr>
+    <th align="left"><%= t("room.user") %></th>
+    <td><%= link_to image_tag( @room.user.profile_image_url, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => "#{@room.user.login}／#{@room.user.name}" ), "http://twitter.com/#!/#{@room.user.login}", :target => "_blank" unless @room.user.blank? %></td>
+  </tr>
+</table>
+
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.list"), { :action => "index" } %>
+  <%= link_to t("menu.tweet"), { :controller => "tweets", :room_id => @room.id, :menu => "tweets" } %>
+  <%= link_to t("menu.edit"), { :action => "edit", :id => @room.id } %>
+  <%= link_to t("menu.delete"), { :action => "destroy", :id => @room.id }, :confirm => "「#{@room.title}」を本当に削除してよろしいですか？" %>
+</span>

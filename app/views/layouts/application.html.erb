@@ -1,17 +1,72 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <title>偉大なるツイッターアプリ</title>
-  </head>
-  <body>
-    <%- flash.each do |name, msg| -%>
-      <div class='flash_<%= name %>'>
-        <%= msg %>
-      </div>
-    <%- end -%>
-    <div>
-      <%= yield %>
-    </div>
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= t("menu.title") %></title>
+  <%= stylesheet_link_tag 'base' %>
+  <%= stylesheet_link_tag 'base_override' %>
+  <%= javascript_include_tag :defaults %>
+</head>
+
+<body>
+
+<div class="page_box">
+  
+<%# ヘッダメニュー %>
+<span class="header_menu menu">
+  <% session[:login_name] = User.get_login_name( session[:user_id], session[:login_name] ) %>
+  <%= "#{session[:login_name]}：" if logged_in? %>
+  <span class="<%= 'now_page' if params[:controller] == 'official' or params[:menu] == 'official' %>"><%= link_to t("menu.official"), { :controller => "official" } %></span>
+  <span class="<%= 'now_page' if params[:controller] == 'public' or params[:menu] == 'public' %>"><%= link_to t("menu.public"), { :controller => "public" } %></span>
+  <span class="<%= 'now_page' if params[:controller] == 'protect' or params[:menu] == 'protect' %>"><%= link_to t("menu.protect"), { :controller => "protect" } %></span>
+
+  <%# ログイン判定 %>
+  <% unless logged_in? %>
+    <%# ログイン前 %>
+    <%= link_to t("menu.login"), login_path %>
+  <% else %>
+    <%# ログイン後 %>
+    <span class="<%= 'now_page' if params[:controller] == 'rooms' or params[:menu] == 'rooms' %>"><%= link_to t("menu.room"), { :controller => "rooms" } %></span>
+    <%= link_to t("menu.logout"), logout_path, :confirm => 'ログアウトしますか？' %>
+  <% end %>
+</span>
+
+<br />
+
+<%# タイトル %>
+<span id="title">
+  <%= link_to t("menu.title"), :root %>
+</span>
+
+<br />
+
+<% unless flash[:notice].blank? %>
+<br />
+<p style="color: green"><%= Utility.replace_message( flash[:notice] ) %></p>
+<% end %>
+
+<%= yield %>
+
+<br />
+<br />
+
+<%# フッター %>
+<center class="menu">
+Produced by <%= link_to "Clowns Rondo", "http://clowns-rondo.heroku.com/", :target => "_blank" %>
+<%= link_to "Developer", "http://twitter.com/#!/shu_0115", :target => "_blank" %>
+<%= link_to "Supporter", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YDYQZ7NS2TXDS", :target => "_blank" %>
+<% unless request.env["HTTP_X_FORWARDED_PROTO"] == "https" %>
+<br /><br />
+<a href="http://twitter.com/share" class="twitter-share-button" data-url="<%= request.url %>" data-text="<%= t("menu.title") %> - #clowns_rondo" data-count="horizontal" data-via="clowns_rondo" data-related="shu_0115:Developer" data-lang="ja">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<iframe src="http://www.facebook.com/plugins/like.php?href=<%= request.url %>&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+<% end %>
+</center>
+
+<br />
+
+</div>
+
+</body>
+
 </html>

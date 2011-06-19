@@ -1,0 +1,72 @@
+
+<% form_for :room, :url => { :action => "create" } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title, t("room.title") %><br />
+    <%= f.text_field :title, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+
+  <p>
+    <%= f.label :hash_tag, t("room.hash_tag") %><br />
+    <%= f.text_field :hash_tag, :class => "input_field_width_200", :value => "#" %>
+  </p>
+
+  <br />
+
+  <p>
+    <%= f.label :external_site, t("room.external_site") %><br />
+    <%= f.text_field :external_site, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+
+  <p>
+    <%= f.label :mode, t("room.mode") %>：
+    <% unless User.level_master?( session[:user_id] ) %>
+      public
+      <%= f.hidden_field :mode, { :value => "public" } %>
+    <% else %>
+      <%= f.select :mode, $mode, :selected => "public" %>
+    <% end %>
+  </p>
+
+  <br />
+
+  <p>
+    <%= f.label :synchro_flag, t("room.synchro_flag") %>：
+    <% unless User.level_master?( session[:user_id] ) %>
+      ON
+      <%= f.hidden_field :synchro_flag, { :value => "ON" } %>
+    <% else %>
+      <%= f.select :synchro_flag, $on_off %>
+    <% end %>
+  </p>
+
+  <br />
+
+  <p>
+    <%= f.label :keep_flag, t("room.keep_flag") %>：
+    <% unless User.level_master?( session[:user_id] ) %>
+      OFF
+      <%= f.hidden_field :keep_flag, { :value => "OFF" } %>
+    <% else %>
+      <%= f.select :keep_flag, $on_off %>
+    <% end %>
+  </p>
+
+  <br />
+
+  <p>
+    <%= f.submit t("menu.create"), :disable_with => t("menu.create") %>
+  </p>
+<% end %>
+
+<br />
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.list"), { :action => "index" } %>
+</span>

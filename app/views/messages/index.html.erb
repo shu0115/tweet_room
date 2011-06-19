@@ -1,10 +1,64 @@
+<% if false %>
 <h1>Messages#index</h1>
 <p>Find me in app/views/messages/index.html.erb</p>
 
 <% if logged_in? %>
   <% form_tag messages_path do %>
-    <%= submit_tag '偉大なるHelloWorldをツイートする' %>
+    <%= submit_tag 'HelloWorld' %>
   <% end %>
 <% else %>
   <%= link_to 'ログインする', login_path %>
 <% end %>
+<% end %>
+
+
+
+
+
+<% twitter_get = current_user.twitter.get( "http://api.twitter.com/1/lists/statuses.json?slug=mine-01-6&owner_screen_name=shu_0115" ) %>
+<% print "[ twitter_get ] : "; p twitter_get ; %>
+
+<% twitter_get.each_with_index{ |data, index| %>
+  <%#= "#{index} : #{data}" %><br />
+  <% data.each_pair{ |key, value| %>
+    <%#= "#{key} : #{data}" %>
+    <%= "#{key}" %>
+    <br />
+    <%= "#{value}" %>
+    <br />
+    <br />
+  <% } %>
+  <br />
+<% } %>
+
+
+
+
+
+<% @twitter_get.each_pair{ |key, value| %>
+<%= "#{key}" %><br />
+<% } %>
+
+<br />
+<br />
+<br />
+
+<%# @twitter_get["lists"].each_pair{ |key, value| %>
+<%#= "#{key}" %><br />
+<%# } %>
+
+<br />
+<br />
+<br />
+
+<% @twitter_get["lists"].each_with_index{ |data, index| %>
+<% data.each_with_index{ |data_2, index_2| %>
+  <%= "#{index} : #{index_2} : #{data_2[0]} : #{data_2[1]}" %><br />
+<%# data.each_with_index{ |data_3, index_3| %>
+
+<%# } %>
+
+<% } %>
+<br />
+<br />
+<% } %>

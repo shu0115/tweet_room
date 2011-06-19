@@ -8,3 +8,50 @@ ja:
     - :year
     - :month
     - :day
+
+  # メニュー
+  menu:
+    title: Tweet Room
+    list: List
+    show: Show
+    edit: Edit
+    delete: Delete
+    new: New
+    top: Top
+    entry: Entry
+    official: Official
+    public: Public
+    protect: Protect
+    private: Private
+    create: 作成
+    update: 更新
+    save: 保存
+    done: 完了
+    undo: 取消
+    confirm: 確認
+    regist: 登録
+    login: ログイン
+    logout: ログアウト
+    reload: Reload
+    tweet: Tweet
+    room: Room
+    prev: Prev
+    next: Next
+
+  room:
+    title: ルーム名
+    hash_tag: ハッシュタグ
+    mode: モード
+    synchro_flag: Twitter連携
+    keep_flag: Tweet保管
+    synchro: 連携
+    keep: 保管
+    external_site: 外部サイト
+    user: 作成者
+
+  tweet:
+    post: ポスト
+
+  user:
+    profile_size: "20x20"
+    icon_alt: "icon"
