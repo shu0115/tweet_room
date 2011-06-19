@@ -28,5 +28,5 @@ config.action_view.cache_template_loading            = true
 # config.threadsafe!
 
 # Twitter OAuth Local Setting
-#LOCAL_OAUTH_CONSUMER_KEY = "none"
-#LOCAL_OAUTH_CONSUMER_SECRET = "none"
+LOCAL_OAUTH_CONSUMER_KEY = "none"
+LOCAL_OAUTH_CONSUMER_SECRET = "none"
