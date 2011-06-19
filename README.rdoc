@@ -1,6 +1,6 @@
 = Tweet Room
 
-Room for Twitter.
+Room for Tweet.
 
 = Local Setting
 
