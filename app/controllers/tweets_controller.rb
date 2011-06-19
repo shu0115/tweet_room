@@ -55,7 +55,7 @@ class TweetsController < ApplicationController
   # char_count #
   #------------#
   def char_count
-    render :text => ( 140 - 1 - params[:value].length - params[:hash_tag_length].to_i )
+    render :text => ( 140 - 1 - params[:value].split(//u).length - params[:hash_tag_length].to_i )
   end
 
   #---------#
