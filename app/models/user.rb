@@ -33,11 +33,9 @@ class User < TwitterAuth::GenericUser
   #--------------------#
   # マスターレベル判定
   def self.level_master?( user_id )
-    user = self.find_by_args( user_id )
+    user = self.find_by_args( :id => user_id )
     unless user.blank?
-      master_user = "shu_0115"
-#      master_user = "klotho_1985"
-      if user.login == master_user
+      if user.login == MASTER_TWITTER_USER
         return true
       else
         return false
