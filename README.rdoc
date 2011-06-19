@@ -5,11 +5,10 @@ Room for Tweet.
 = Local Setting
 
 config/local_setting.rb
------
+
 # Twitter OAuth Local Setting
 LOCAL_OAUTH_CONSUMER_KEY = "YOUR_CONSUMER_KEY"
 LOCAL_OAUTH_CONSUMER_SECRET = "YOUR_CONSUMER_SECRET"
------
 
 = Copyright
 
