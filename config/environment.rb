@@ -43,6 +43,3 @@ end
 
 # gem 'mislav-will_paginate', '~> 2.2'
 require 'will_paginate'
-
-# Twitter OAuth Local Setting
-require "#{RAILS_ROOT}/config/local_setting.rb"
