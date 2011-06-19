@@ -2,14 +2,22 @@
 <table>
   <tr>
     <td style="white-space: nowrap;">
-    <% unless @room.external_site.blank? %>
-      <%= link_to @room.title, @room.external_site, :target => "_blank" %>
-    <% else %>
-      <%= @room.title %>
-    <% end %>
-    <br />
-    <%= t("room.synchro") %>：<%= @room.synchro_flag %>　<%= t("room.keep") %>：<%= @room.keep_flag %><br />
-    検索：<%= link_to "Twitter", "http://twitter.com/#!/search/#{CGI.escape(@room.hash_tag)}", :target => "_blank" %>　<%= link_to "Google", "http://www.google.co.jp/search?q=#{CGI.escape(@room.hash_tag)}&hl=ja&biw=1131&bih=754&prmd=ivns&source=lnms&tbs=mbl:1&ei=WxWTTcqGIJHqvQPT-Zi9CA&sa=X&oi=mode_link&ct=mode&cd=9&ved=0CB4Q_AUoCA&prmdo=1#q=#{CGI.escape(@room.hash_tag)}+site%3Atwitter.com&tbs=mbl:1&tbo=1&hl=ja&lr=lang_ja&prmdo=1&tbm=mbl&sa=X&ei=gM7lTYzGI4mOvQPOk5CECw&ved=0CCMQsQcwAA&bav=on.2,or.r_gc.r_pw.&fp=a7fd3f5679dbb192&biw=1123&bih=716", :target => "_blank" %>
+      <%# 部屋タイトル %>
+      <% unless @room.external_site.blank? %>
+        <%= link_to @room.title, @room.external_site, :target => "_blank" %>
+      <% else %>
+        <%= @room.title %>
+      <% end %>
+      <br />
+      
+      <%# ハッシュタグ %>
+      <%= t("room.hash_tag") %>：<%= @room.hash_tag %><br />
+      
+      <%# 連携／保管 %>
+      <%= t("room.synchro") %>：<%= @room.synchro_flag %>　<%= t("room.keep") %>：<%= @room.keep_flag %><br />
+      
+      <%# 検索 %>
+      検索：<%= link_to "Twitter", "http://twitter.com/#!/search/#{CGI.escape(@room.hash_tag)}", :target => "_blank" %>　<%= link_to "Google", "http://www.google.co.jp/search?q=#{CGI.escape(@room.hash_tag)}&hl=ja&biw=1131&bih=754&prmd=ivns&source=lnms&tbs=mbl:1&ei=WxWTTcqGIJHqvQPT-Zi9CA&sa=X&oi=mode_link&ct=mode&cd=9&ved=0CB4Q_AUoCA&prmdo=1#q=#{CGI.escape(@room.hash_tag)}+site%3Atwitter.com&tbs=mbl:1&tbo=1&hl=ja&lr=lang_ja&prmdo=1&tbm=mbl&sa=X&ei=gM7lTYzGI4mOvQPOk5CECw&ved=0CCMQsQcwAA&bav=on.2,or.r_gc.r_pw.&fp=a7fd3f5679dbb192&biw=1123&bih=716", :target => "_blank" %>
     </td>
   </tr>
 </table>
