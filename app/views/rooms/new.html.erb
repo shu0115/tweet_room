@@ -41,7 +41,7 @@
       ON
       <%= f.hidden_field :synchro_flag, { :value => "ON" } %>
     <% else %>
-      <%= f.select :synchro_flag, $on_off %>
+      <%= f.select :synchro_flag, $on_off, :selected => "ON" %>
     <% end %>
   </p>
 
@@ -53,7 +53,7 @@
       OFF
       <%= f.hidden_field :keep_flag, { :value => "OFF" } %>
     <% else %>
-      <%= f.select :keep_flag, $on_off %>
+      <%= f.select :keep_flag, $on_off, :selected => "OFF" %>
     <% end %>
   </p>
 
