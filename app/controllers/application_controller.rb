@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   $per_page = 15
-#  $per_page = 3
   $mode = [ "official", "public", "protect", "private" ]
   $on_off = [ "ON", "OFF" ]
 end
