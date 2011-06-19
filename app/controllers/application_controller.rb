@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   
-  $per_page = 15
+  $per_page = 30
   $mode = [ "official", "public", "protect", "private" ]
   $on_off = [ "ON", "OFF" ]
 end
